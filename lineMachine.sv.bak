@@ -1,0 +1,28 @@
+module lineMachine(input logic clk, reset, 
+						 output logic [10:0] x0, y0, x1, y1, 
+						 output logic color)
+	enum {A, B, C, D, E, F, G} ps, ns;
+	
+	always_comb begin
+		case(ps)
+			A: begin
+					ns = B;
+					x0 = 0;
+					y0 = 480;
+					x1 = 160;
+					y1 = 360;
+					color = 1;
+				end
+			B: begin
+					ns = C;
+					x0 = 160;
+					y0 = 120;
+					x1 = 
+				end
+			C:
+			D:
+		endcase
+	end
+						 
+						 
+endmodule 

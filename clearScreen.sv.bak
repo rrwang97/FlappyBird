@@ -1,0 +1,34 @@
+module clearScreen (input logic start, reset, clk,
+						  output logic [10:0] x, y,
+						  output logic color
+						  );
+	logic [10:0] nx, ny;
+						  
+	always_comb begin
+		if (x < 640) nx = x + 1;
+		else nx = 0;
+		if (y < 480) ny = y + 1;
+		else ny = 0;
+	end			  
+	
+	always_ff @(posedge clk) begin
+		if (reset) begin x <= 0; y <= 0; end
+		else if (start) begin x <= nx; y <= ny;end
+	end
+						  					  
+endmodule					
+
+module clearScreen_testbench();
+
+	logic start, reset, clk, color;
+	logic [10:0] x, y;
+	
+	clearScreen dut (start, reset, clk, x, y, color);
+	
+	initial begin
+		reset = 1; #10;
+		reset = 0; #10;
+		start = 1; #100;
+	end 
+	
+endmodule 
