@@ -24,11 +24,11 @@ module bird #(parameter N = 10, BIRD_SIZE = 15)(reset, clk, flap, x0, y0, x1, y1
 			y0 <=  START_Y0;
 			y1 <=  START_Y1;
 			gravity <= GRAVITY_CONST;
-			divided_clk < = '0;
+			divided_clk <= '0;
 		end
 		else if (flap) begin // fly up
 			gravity <= GRAVITY_CONST; // reset gravity acceleration
-			divided_clk < = '0;		  // SO the bird doesnt fall right after going up
+			divided_clk <= '0;		  // SO the bird doesnt fall right after going up
 			x0 <= x0;
 			x1 <= x1;
 			if (y1 > 0) begin // hit the top border
@@ -40,7 +40,7 @@ module bird #(parameter N = 10, BIRD_SIZE = 15)(reset, clk, flap, x0, y0, x1, y1
 				y1 <= y1;
 			end
 		end
-		else if @(posedge divided_clk[21]) begin				// fall down
+		else if (divided_clk == (32'b1 << 21)) begin				// fall down
 			gravity <= gravity ** GRAVITY_ACCEL; // increase amount you fall by
 			x0 <= x0;
 			x1 <= x1;
