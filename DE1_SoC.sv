@@ -28,9 +28,14 @@ module DE1_SoC (HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, SW, CLOCK_50,
 	assign LEDR = SW;
 	
 	//Instantiates internal logic
-	logic [10:0] x0, y0, x1, y1, x, y, nextX, clrX, clrY;
-	logic [10:0] lineX, lineY;
-	logic color, move, clk, start, lineColor, clearColor;
+	logic [10:0] x0, y0, x1, y1, x, y, clrX, clrY;
+	logic [10:0] lineX, lineY, bx0, by0, bx1, by1, inx0, iny0, inx1, iny1;
+	logic [10:0] pipex0, pipey0, pipex1, pipey1, birdx0, birdy0, birdx1, birdy1;
+	logic [7:0] sizex0, sizey0, sizex1, sizey1;
+	logic color, move, clk, lineColor, clearColor, writeFifo, memRead;
+	logic emptyx0, emptyy0, emptyx1, emptyy1, fullx0, fully0, fullx1, fully1;
+	logic reset, clear, wr, empty;
+	
 	logic [17:0] cnt;
 	
 	//Reset is assigned to switch 9
@@ -55,15 +60,36 @@ module DE1_SoC (HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, SW, CLOCK_50,
 				.pixel_color(color), .pixel_write(1'b1),
 				.VGA_R, .VGA_G, .VGA_B, .VGA_CLK, .VGA_HS, .VGA_VS,
 				.VGA_BLANK_n(VGA_BLANK_N), .VGA_SYNC_n(VGA_SYNC_N));
+				
 	//draws lines based on coordinate values 
-	line_drawer lines (.clk(clk), .reset(start),
+	line_drawer lines (.clk(clk), .reset(reset),
 				.x0, .y0, .x1, .y1, .x(lineX), .y(lineY), .move(move));
-	//Holds states for the line_drawer		
-	lineMachine mach (.clk(clk), .reset(reset), 
-				.move(move), .x0, .y0, .x1, .y1, .color(lineColor), .start);
+				
 	//Counter that covers all pixel coordinates			
-	clearScreen clr (.start(SW[8]), .reset(reset), .clk(CLOCK_50),
+	clearScreen clr (.start(clear), .reset(reset), .clk(CLOCK_50),
 						  .x(clrX), .y(clrY), .color(clearColor));
+	
+	BufferControl bcontrol (clk, reset, pipex0, pipey0, pipex1, pipey1, birdx0, birdy0, birdx1, birdy1,
+					  bx0, by0, bx1, by1, wr, clear);
+					 
+	userInput writeSignal (.clk(clk), .reset(reset), .KEY(wr), .out(writeFifo));
+					  
+	FrameBufferFeed feeder (clk, reset, empty, inx0, iny0, inx1, iny1, x0, y0, x1, y1, memRead);
+	
+	
+	//Need to create a write signal that is not true all the time or else fifo will be filled
+	//Fifo to hold x0 values
+	memory memx0 (.clock(CLOCK_50), .data(bx0), .rdreq(memRead), .sclr(reset), .wrreq(writeFifo), .empty(emptyx0),
+					  .full(fullx0), .q(inx0), .usedw(sizex0));
+	//Fifo to hold y0 values				  
+	memory memy0 (.clock(CLOCK_50), .data(by0), .rdreq(memRead), .sclr(reset), .wrreq(writeFifo), .empty(emptyy0),
+					  .full(fully0), .q(iny0), .usedw(sizey0));
+	//Fifo to hold x1 values	  
+	memory memx1 (.clock(CLOCK_50), .data(bx1), .rdreq(memRead), .sclr(reset), .wrreq(writeFifo), .empty(emptyx1),
+					  .full(fullx1), .q(inx1), .usedw(sizex1));
+	//Fifo to hold y1 values				  
+	memory memy1 (.clock(CLOCK_50), .data(by1), .rdreq(memRead), .sclr(reset), .wrreq(writeFifo), .empty(emptyy1),
+					  .full(fully1), .q(iny1), .usedw(sizey1));
 	
 endmodule
 
