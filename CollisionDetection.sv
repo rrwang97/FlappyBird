@@ -1,3 +1,4 @@
+// GIVE A 12 HZ clock
 module CollisionDetection #(parameter N = 10)
 			(reset, clk, bird_x, bird_y0, bird_y1,
 			pipe1_x, pipe1_y0, pipe1_y1, 

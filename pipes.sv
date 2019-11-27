@@ -1,3 +1,4 @@
+// Clock at 12.5Mhz
 module pipes #(parameter N = 10, PIPE_WIDTH = 1, BIRD_SIZE = 15) 
 			(reset, clk, start, pipe_length, x, y_top, y_bot, y0, y1 );
 	input logic reset, clk, start;
@@ -5,12 +6,26 @@ module pipes #(parameter N = 10, PIPE_WIDTH = 1, BIRD_SIZE = 15)
 	
 	output logic [N-1 : 0] x, y_top, y_bot, y0, y1; // y0 should be "lower" pipe, i.e. y0 > y1
 	
-	logic decr_x;
+	logic decr_x, CLK_3HZ;
+	
+	logic [31 : 0] divided_clk; // used to slow down falling bc user can't input fast enough to ever beat a 50MHz clk
+									 // Realistically a person can press space 8-9 times per sec
+									 // 50MHz / 6.25M = 8 Hz 
+									 // divided_clk[0] = 25MHz, [1] = 12.5Mhz, ... [21] = 12Hz, [22] = 6Hz
+	
+	always_ff @(posedge clk) begin
+		if (reset) 
+			divided_clk <= '0;
+		else
+			divided_clk <= divided_clk + 1;
+	end
+	
+	userInput dividedclk (.reset, .clk(CLOCK_50), .in(divided_clk[23]), .out(CLK_3HZ));
 	
 	parameter START_X = 640 - PIPE_WIDTH, // starts on far right of screen
 				START_Y0 = 240 + BIRD_SIZE,  // gap of 2x the size of the bird
 				START_Y1 = 240 - BIRD_SIZE;
-
+				
 	// NOTE: ALSO MIGHT WANT TO MOVE X OUT OF THIS MODULE TO TRACK AND INCREMENT IN UPPER MODULE
 	always_ff @(posedge clk) begin
 		if (reset) begin
@@ -52,7 +67,7 @@ module pipes #(parameter N = 10, PIPE_WIDTH = 1, BIRD_SIZE = 15)
 			end
 			
 			// decrement x til it hits zero then we know to pick another y, i.e. start a new pipe
-			else begin
+			else if (CLK_3HZ) begin
 				if (x == 0) begin
 					decr_x <= 0; // stop decrementing x
 					x <= 640; // reset to front
