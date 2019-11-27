@@ -1,10 +1,10 @@
 // Clock at 12.5Mhz
-module pipes #(parameter N = 10, PIPE_WIDTH = 1, BIRD_SIZE = 15) 
-			(reset, clk, start, pipe_length, x, y_top, y_bot, y0, y1 );
+module pipes #(parameter N = 11, PIPE_WIDTH = 1, BIRD_SIZE = 15, START_X = 640) 
+			(reset, clk, start, pipe_length, x, y0, y1 );
 	input logic reset, clk, start;
 	input logic [9:0] pipe_length;
 	
-	output logic [N-1 : 0] x, y_top, y_bot, y0, y1; // y0 should be "lower" pipe, i.e. y0 > y1
+	output logic [N-1 : 0] x, y0, y1; // y0 should be "lower" pipe, i.e. y0 > y1
 	
 	logic decr_x, CLK_3HZ;
 	
@@ -22,7 +22,7 @@ module pipes #(parameter N = 10, PIPE_WIDTH = 1, BIRD_SIZE = 15)
 	
 	userInput dividedclk (.reset, .clk(CLOCK_50), .in(divided_clk[23]), .out(CLK_3HZ));
 	
-	parameter START_X = 640 - PIPE_WIDTH, // starts on far right of screen
+	parameter// START_X = 640 - PIPE_WIDTH, // starts on far right of screen
 				START_Y0 = 240 + BIRD_SIZE,  // gap of 2x the size of the bird
 				START_Y1 = 240 - BIRD_SIZE;
 				
@@ -80,10 +80,6 @@ module pipes #(parameter N = 10, PIPE_WIDTH = 1, BIRD_SIZE = 15)
 			// no op until start signal is set
 		end
 	end
-	
-	
-	assign y_top = '0;
-	assign y_bot = 480;
 	
 endmodule
 

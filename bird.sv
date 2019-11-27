@@ -1,5 +1,5 @@
 // If inputted clock isnt 50 MHz then we have to redo the math for divided_clk
-module bird #(parameter N = 10, BIRD_SIZE = 15)(reset, clk, flap, x0, y0, x1, y1);
+module bird #(parameter N = 101, BIRD_SIZE = 15)(reset, clk, flap, x0, y0, x1, y1);
 	input logic reset, clk;
 	input logic flap; // moves bird up
 	

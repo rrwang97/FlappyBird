@@ -1,8 +1,15 @@
-module BufferControl #(parameter N = 11) (clock, reset, pipex0, pipey0, pipex1, pipey1, birdx0, birdy0, birdx1, birdy1,
-														x0, y0, x1, y1, wr, clearScreen);
+module BufferControl #(parameter N = 11) (clock, reset, pipe1_x, pipe1_y0, pipe1_y1,
+					pipe2_x, pipe2_y0, pipe2_y1,
+					pipe3_x, pipe3_y0, pipe3_y1,
+					y_top, y_bot, 
+					bird_x, bird_y0, bird_y1, x0, y0, x1, y1, wr, clearScreen);
 
 	input logic clock, reset;
-	input logic [N-1:0] pipex0, pipey0, pipex1, pipey1, birdx0, birdy0, birdx1, birdy1; //initial and end coordinates
+	input logic [N-1:0] pipe1_x, pipe1_y0, pipe1_y1,
+					pipe2_x, pipe2_y0, pipe2_y1,
+					pipe3_x, pipe3_y0, pipe3_y1,
+					y_top, y_bot, 
+					bird_x, bird_y0, bird_y1;
 	logic [N-1:0] nx0, ny0, nx1, ny1;
 	integer i=0; 
 	logic porb;
@@ -24,16 +31,48 @@ module BufferControl #(parameter N = 11) (clock, reset, pipex0, pipey0, pipex1, 
 	always_comb begin
 		case(porb)
 			1: begin
-				nx0 = pipex0;
-				ny0 = pipey0;
-				nx1 = pipex1;
-				ny1 = pipey1;
+				if (i == 1) begin 
+					nx0 = pipe1_x;
+					ny0 = y_top;
+					nx1 = pipe1_x;
+					ny1 = pipe1_y1;
+				end
+				else if (i == 2) begin 
+					nx0 = pipe1_x;
+					ny0 = pipe1_y0;
+					nx1 = pipe1_x;
+					ny1 = y_bot;
+				end
+				if (i == 3) begin 
+					nx0 = pipe2_x;
+					ny0 = y_top;
+					nx1 = pipe2_x;
+					ny1 = pipe2_y1;
+				end
+				else if (i == 4) begin 
+					nx0 = pipe2_x;
+					ny0 = pipe2_y0;
+					nx1 = pipe2_x;
+					ny1 = y_bot;
+				end
+				if (i == 5) begin 
+					nx0 = pipe3_x;
+					ny0 = y_top;
+					nx1 = pipe3_x;
+					ny1 = pipe3_y1;
+				end
+				else begin 
+					nx0 = pipe3_x;
+					ny0 = pipe3_y0;
+					nx1 = pipe3_x;
+					ny1 = y_bot;
+				end
 			end
 			0: begin
-				nx0 = birdx0;
-				ny0 = birdy0;
-				nx1 = birdx1;
-				ny1 = birdy1;
+				nx0 = bird_x;
+				ny0 = bird_y0;
+				nx1 = bird_x;
+				ny1 = bird_y1;
 			end
 		endcase 
 	end
@@ -55,7 +94,7 @@ module BufferControl #(parameter N = 11) (clock, reset, pipex0, pipey0, pipex1, 
 			wr <= 1;
 		end
 		
-		if (i == 7) begin
+		if (i == 6) begin
 			i <= 0;
 			clearScreen <= 1;
 		end
