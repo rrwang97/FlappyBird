@@ -5,8 +5,8 @@ module bird #(parameter N = 10, BIRD_SIZE = 15)(reset, clk, flap, x0, y0, x1, y1
 	output logic [N-1 : 0] x0, y0, x1, y1;
 	
 	parameter START_X = 160,
-				START_Y0 = 240 - BIRD_SIZE/2,
-				START_Y1 = 240 + BIRD_SIZE/2;
+				START_Y0 = 240 + BIRD_SIZE/2,
+				START_Y1 = 240 - BIRD_SIZE/2;
 	
 	// MIGHT REMOVE X FROM HERE BC IT IS A CONSTANT SINCE THE BIRD NEVER MOVES "HORIZONTALLY"
 	
@@ -20,7 +20,7 @@ module bird #(parameter N = 10, BIRD_SIZE = 15)(reset, clk, flap, x0, y0, x1, y1
 		else if (flap) begin // fly up
 			x0 <= x0;
 			x1 <= x1;
-			if (y0 > 0) begin // hit the top border
+			if (y1 > 0) begin // hit the top border
 				y0 <= y0 - 1;
 				y1 <= y1 - 1;
 			end 
@@ -32,7 +32,7 @@ module bird #(parameter N = 10, BIRD_SIZE = 15)(reset, clk, flap, x0, y0, x1, y1
 		else begin				// fall down			
 			x0 <= x0;
 			x1 <= x1;
-			if (y1 < 480) begin
+			if (y0 < 480) begin // hit bottom border
 				y0 <= y0 + 1;
 				y1 <= y1 + 1;
 			end
