@@ -25,3 +25,5 @@ LFSR_10Bit module
   - clock faster than pipe but not at a multiple of pipes clock
   - also not a big deal. Randomness factor is not required
    
+NOTE
+  Mark said that the pipes move across the screen at a slower rate than the bird should be drawn for a nicer looking animation and also so   the game is playable. If pipes and bird are updated at the same freq than its really hard to move the bird out of the way of the pipes
