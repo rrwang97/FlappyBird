@@ -18,6 +18,98 @@ module DE1_SoC (HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, SW, CLOCK_50,
 	output VGA_SYNC_N;
 	output VGA_VS;
 	input logic PS2_DAT, PS2_CLK;
+
+	//Sets all 7 seg displays to be off
+	assign HEX2 = '1;
+	assign HEX3 = '1;
+	assign HEX4 = '1;
+	assign HEX5 = '1;
+	assign LEDR = SW;
+	
+	//Reset is assigned to switch 9
+	assign reset = SW[9];
+
+	logic [10:0] clr_x, clr_y, line_x, line_y, x, y, 
+					x0, y0, x1, y1,
+					pipe1_x, pipe1_y0, pipe1_y1,
+					pipe2_x, pipe2_y0, pipe2_y1,
+					pipe3_x, pipe3_y0, pipe3_y1,
+					y_top, y_bot, //top and bottom of the screen
+					bird_x, bird_y0, bird_y1;
+	
+	logic [9:0] pipe_length;
+	logic [7:0] outCode;
+	logic [6:0] score;
+	logic makeBreak, valid, flap, game_over, color;
+	logic line_done, clear_done, cycle_done;
+
+//******** PIPES & BIRD COORDS ***********//
+	assign y_top = '0;
+	assign y_bot = 480;
+	
+	LFSR_10Bit randomizer (.reset, .clk(CLOCK_50), .Q(pipe_length));
+	
+	pipes #(.START_X(640)) pipe1 (.reset, .clk(CLOCK_50), .start(1), .pipe_length, .x(pipe1_x), .y0(pipe1_y0), .y1(pipe1_y1));
+	pipes #(.START_X(440)) pipe2 (.reset, .clk(CLOCK_50), .start(1), .pipe_length, .x(pipe2_x), .y0(pipe2_y0), .y1(pipe2_y1));
+	pipes #(.START_X(240)) pipe3 (.reset, .clk(CLOCK_50), .start(1), .pipe_length, .x(pipe3_x), .y0(pipe3_y0), .y1(pipe3_y1));
+	
+	userInput spacebar (.reset, .clk(CLOCK_50), .in((outCode == 8'h29) && makeBreak), .out(flap));
+	
+	keyboard_press_driver spacebar_input(.reset, .CLOCK_50, .outCode, .makeBreak, .valid, .PS2_DAT, .PS2_CLK);
+	
+	bird birdy (.reset, .clk(CLOCK_50), .flap, .x0(bird_x), .y0(bird_y0), .y1(bird_y1));
+	
+//******* Score *******//
+	CollisionDetection hit (.reset, .clk(CLOCK_50), .pipe1_x, .pipe1_y0, .pipe1_y1,
+					.pipe2_x, .pipe2_y0, .pipe2_y1, .pipe3_x, .pipe3_y0, .pipe3_y1,
+					.bird_x, .bird_y0, .bird_y1, .score, .game_over);
+					
+	DisplayScore points (.score, .HEX0, .HEX1);
+
+//******** Line Control logic ********//
+	LineControl chooseLine (.clk(CLOCK_50), .reset, .pipe1_x, .pipe1_y0, .pipe1_y1, .pipe2_x, .pipe2_y0, .pipe2_y1,
+										.pipe3_x, .pipe3_y0, .pipe3_y1, .y_top, .y_bot, 
+										.bird_x, .bird_y0, .bird_y1, .x0, .y0, .x1, .y1, 
+										.line_done, .clear_done, .cycle_done);
+										
+	line_drawer drawLines (.clk(CLOCK_50), .reset(reset), .x0, .y0, .x1, .y1, .x(line_x), .y(line_y), .move(line_done));
+		
+	clearScreen clearshit (.clk(CLOCK_50), .reset, .start(cycle_done), .x(clr_x), .y(clr_y), .done(clear_done));
+	
+//******** VGA *************//
+	assign x = cycle_done ? clr_x : line_x;
+	assign y = cycle_done ? clr_y : line_y;
+	assign color = cycle_done ? 0 : 1;
+	
+	VGA_framebuffer fb(.clk50(CLOCK_50), .reset, .x, .y,
+				.pixel_color(color), .pixel_write(1'b1),
+				.VGA_R, .VGA_G, .VGA_B, .VGA_CLK, .VGA_HS, .VGA_VS,
+				.VGA_BLANK_n(VGA_BLANK_N), .VGA_SYNC_n(VGA_SYNC_N));
+
+endmodule
+	
+/*
+
+//Top level file to combine logic from all modules to create the working product.
+//Has VGA output so it is possible to draw on the screen
+module DE1_SoC (HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, SW, CLOCK_50, 
+	VGA_R, VGA_G, VGA_B, VGA_BLANK_N, VGA_CLK, VGA_HS, VGA_SYNC_N, VGA_VS, PS2_DAT, PS2_CLK);
+	
+	//Initializes all logic
+	output logic [6:0] HEX0, HEX1, HEX2, HEX3, HEX4, HEX5;
+	output logic [9:0] LEDR;
+	input logic [3:0] KEY;
+	input logic [9:0] SW;
+	input CLOCK_50;
+	output [7:0] VGA_R;
+	output [7:0] VGA_G;
+	output [7:0] VGA_B;
+	output VGA_BLANK_N;
+	output VGA_CLK;
+	output VGA_HS;
+	output VGA_SYNC_N;
+	output VGA_VS;
+	input logic PS2_DAT, PS2_CLK;
 	
 	//Sets all 7 seg displays to be off
 //	assign HEX0 = '1;
@@ -126,6 +218,8 @@ module DE1_SoC (HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, SW, CLOCK_50,
 					  .full(fully1), .q(iny1), .usedw(sizey1));
 	
 endmodule
+
+*/
 
 //Testbench for DE1_SoC
 module DE1_SoC_testbench();

@@ -20,7 +20,7 @@ module pipes #(parameter N = 11, PIPE_WIDTH = 1, BIRD_SIZE = 15, START_X = 640)
 			divided_clk <= divided_clk + 1;
 	end
 	
-	userInput dividedclk (.reset, .clk(CLOCK_50), .in(divided_clk[23]), .out(CLK_3HZ));
+	userInput dividedclk (.reset, .clk, .in(divided_clk[23]), .out(CLK_3HZ));
 	
 	parameter// START_X = 640 - PIPE_WIDTH, // starts on far right of screen
 				START_Y0 = 240 + BIRD_SIZE,  // gap of 2x the size of the bird

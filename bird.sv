@@ -3,9 +3,9 @@ module bird #(parameter N = 101, BIRD_SIZE = 15)(reset, clk, flap, x0, y0, x1, y
 	input logic reset, clk;
 	input logic flap; // moves bird up
 	
-	output logic [N-1 : 0] x0, y0, x1, y1;
+	output logic signed [N-1 : 0] x0, y0, x1, y1;
 	
-	parameter START_X = 160,
+	parameter signed START_X = 160,
 				START_Y0 = 240 + BIRD_SIZE/2,
 				START_Y1 = 240 - BIRD_SIZE/2,
 				GRAVITY_CONST = 2, GRAVITY_ACCEL = 2,
@@ -24,8 +24,8 @@ module bird #(parameter N = 101, BIRD_SIZE = 15)(reset, clk, flap, x0, y0, x1, y
 		else
 			divided_clk <= divided_clk + 1;
 	end
-	
-	userInput dividedclk (.reset, .clk(CLOCK_50), .in(divided_clk[21]), .out(CLK_12HZ));
+												// for testbench use divided_clk[1] a faster clock
+	userInput dividedclk (.reset, .clk, .in(divided_clk[21]), .out(CLK_12HZ));
 									
 	always_ff @(posedge clk) begin
 		if (reset) begin		// starting position
@@ -39,7 +39,7 @@ module bird #(parameter N = 101, BIRD_SIZE = 15)(reset, clk, flap, x0, y0, x1, y
 			gravity <= GRAVITY_CONST; // reset gravity acceleration
 			x0 <= x0;
 			x1 <= x1;
-			if (y1 > 0) begin // hit the top border
+			if ((y1 - FLY_UP) > 0) begin // hit the top border
 				y0 <= y0 - FLY_UP;
 				y1 <= y1 - FLY_UP;
 			end 
@@ -47,12 +47,12 @@ module bird #(parameter N = 101, BIRD_SIZE = 15)(reset, clk, flap, x0, y0, x1, y
 				y0 <= y0;
 				y1 <= y1;
 			end
-		end		// essentially @posedge CLOCK_12HZ
+		end		// essentially @posedge CLOCK_12HZ === divided_clk[21]
 		else if (CLK_12HZ) begin	// fall down
-			gravity <= gravity ** GRAVITY_ACCEL; // increase amount you fall by
+			gravity <= gravity + GRAVITY_ACCEL; // increase amount you fall by
 			x0 <= x0;
 			x1 <= x1;
-			if (y0 < 480) begin // hit bottom border
+			if ((y0 + gravity) < 480) begin // hit bottom border
 				y0 <= y0 + gravity;
 				y1 <= y1 + gravity;
 			end
@@ -68,7 +68,7 @@ endmodule
 module bird_testbench #(parameter N = 10, BIRD_SIZE = 15) ();
 	logic reset, clk;
 	logic flap;
-	logic [N-1 : 0] x0, y0, x1, y1;
+	logic signed [N-1 : 0] x0, y0, x1, y1;
 	
 	bird #(.N(N), .BIRD_SIZE(BIRD_SIZE)) dut (.*);
 	
