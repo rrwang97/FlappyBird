@@ -1,0 +1,178 @@
+# Reading C:/intelFPGA_lite/17.0/modelsim_ase/tcl/vsim/pref.tcl
+vdel -all -lib work
+vlib work
+vlog -reportprogress 300 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/altera_up_avalon_video_vga_timing.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:18 on Dec 04,2019
+# vlog -reportprogress 300 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/altera_up_avalon_video_vga_timing.v 
+# -- Compiling module altera_up_avalon_video_vga_timing
+# 
+# Top level modules:
+# 	altera_up_avalon_video_vga_timing
+# End time: 10:32:19 on Dec 04,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/bird.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:19 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/bird.sv 
+# -- Compiling module bird
+# -- Compiling module bird_testbench
+# 
+# Top level modules:
+# 	bird_testbench
+# End time: 10:32:19 on Dec 04,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/clock_divider.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:19 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/clock_divider.sv 
+# -- Compiling module clock_divider
+# 
+# Top level modules:
+# 	clock_divider
+# End time: 10:32:19 on Dec 04,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/CLOCK25_PLL.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:19 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/CLOCK25_PLL.v 
+# -- Compiling module CLOCK25_PLL
+# 
+# Top level modules:
+# 	CLOCK25_PLL
+# End time: 10:32:19 on Dec 04,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/CollisionDetection.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:19 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/CollisionDetection.sv 
+# -- Compiling module CollisionDetection
+# -- Compiling module CollisionDetection_testbench
+# 
+# Top level modules:
+# 	CollisionDetection_testbench
+# End time: 10:32:19 on Dec 04,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/DE1_SoC.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:19 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/DE1_SoC.sv 
+# -- Compiling module DE1_SoC
+# -- Compiling module DE1_SoC_testbench
+# 
+# Top level modules:
+# 	DE1_SoC_testbench
+# End time: 10:32:20 on Dec 04,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/DisplayScore.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:20 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/DisplayScore.sv 
+# -- Compiling module DisplayScore
+# -- Compiling module DisplayScore_testbench
+# 
+# Top level modules:
+# 	DisplayScore_testbench
+# End time: 10:32:20 on Dec 04,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/FrameBufferFeed.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:20 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/FrameBufferFeed.sv 
+# -- Compiling module FrameBufferFeed
+# 
+# Top level modules:
+# 	FrameBufferFeed
+# End time: 10:32:20 on Dec 04,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/keyboard_inner_driver.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:20 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/keyboard_inner_driver.v 
+# -- Compiling module keyboard_inner_driver
+# 
+# Top level modules:
+# 	keyboard_inner_driver
+# End time: 10:32:20 on Dec 04,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/keyboard_press_driver.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:20 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/keyboard_press_driver.v 
+# -- Compiling module keyboard_press_driver
+# 
+# Top level modules:
+# 	keyboard_press_driver
+# End time: 10:32:20 on Dec 04,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/LFSR_10Bit.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:21 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/LFSR_10Bit.sv 
+# -- Compiling module LFSR_10Bit
+# -- Compiling module LFSR_10Bit_testbench
+# 
+# Top level modules:
+# 	LFSR_10Bit_testbench
+# End time: 10:32:21 on Dec 04,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/pipes.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:21 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/pipes.sv 
+# -- Compiling module pipes
+# -- Compiling module pipes_testbench
+# 
+# Top level modules:
+# 	pipes_testbench
+# End time: 10:32:21 on Dec 04,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/userInput.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:21 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/userInput.sv 
+# -- Compiling module userInput
+# -- Compiling module Dflip
+# -- Compiling module userInput_testbench
+# 
+# Top level modules:
+# 	userInput_testbench
+# End time: 10:32:21 on Dec 04,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 30 -work work {C:/Users/Josep/Documents/ECE 371/FlappyBird/video_driver.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:32:21 on Dec 04,2019
+# vlog -reportprogress 30 -work work C:/Users/Josep/Documents/ECE 371/FlappyBird/video_driver.sv 
+# -- Compiling module video_driver
+# 
+# Top level modules:
+# 	video_driver
+# End time: 10:32:21 on Dec 04,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vsim work.DE1_SoC_testbench
+# vsim work.DE1_SoC_testbench 
+# Start time: 10:32:38 on Dec 04,2019
+# Loading sv_std.std
+# Loading work.DE1_SoC_testbench
+# Loading work.DE1_SoC
+# Loading work.video_driver
+# Loading work.CLOCK25_PLL
+# ** Error (suppressible): (vsim-3009) [TSCALE] - Module 'DE1_SoC_testbench' does not have a timeunit/timeprecision specification in effect, but other modules do.
+#    Time: 0 ps  Iteration: 0  Instance: /DE1_SoC_testbench/dut/v1/c25_gen File: C:/Users/Josep/Documents/ECE 371/FlappyBird/CLOCK25_PLL.v
+# ** Error: (vsim-3033) C:/Users/Josep/Documents/ECE 371/FlappyBird/CLOCK25_PLL.v(13): Instantiation of 'CLOCK25_PLL_0002' failed. The design unit was not found.
+#    Time: 0 ps  Iteration: 0  Instance: /DE1_SoC_testbench/dut/v1/c25_gen File: C:/Users/Josep/Documents/ECE 371/FlappyBird/CLOCK25_PLL.v
+#         Searched libraries:
+#             C:/Users/Josep/Documents/ECE 371/FlappyBird/work
+# Loading work.altera_up_avalon_video_vga_timing
+# Loading work.LFSR_10Bit
+# Loading work.pipes
+# Loading work.userInput
+# Loading work.Dflip
+# Loading work.keyboard_press_driver
+# Loading work.keyboard_inner_driver
+# Loading work.bird
+# Loading work.CollisionDetection
+# Loading work.DisplayScore
+# Error loading design
+# End time: 10:32:39 on Dec 04,2019, Elapsed time: 0:00:01
+# Errors: 2, Warnings: 0
