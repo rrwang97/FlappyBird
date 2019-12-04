@@ -2,6 +2,7 @@
 
 Project for EE 371
 
+WORKING DESIGN IN FLAPPYBIRD2
 
 Need to add the counter module for scorekeeping [X]
   - I implemented score keeping with the CollisionDetection module
